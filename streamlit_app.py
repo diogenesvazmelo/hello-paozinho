@@ -1,5 +1,5 @@
 import streamlit as st
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
 import time
 """
@@ -28,11 +28,11 @@ color = "#FF0000"
 animate = True
 
 # Desenho do coração
-fig, ax = plt.subplots(figsize=(5, 5))
-plot_heart(ax, scale=scale, color=color)
-ax.axis('equal')
-ax.axis('off')
-st.pyplot(fig)
+# fig, ax = plt.subplots(figsize=(5, 5))
+# plot_heart(ax, scale=scale, color=color)
+# ax.axis('equal')
+# ax.axis('off')
+# st.pyplot(fig)
 
 # Configura a animação do texto
 if animate:
