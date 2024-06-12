@@ -1,37 +1,52 @@
 import streamlit as st
-
+import matplotlib.pyplot as plt
+import numpy as np
+import time
 """
-# Welcome to Streamlit!
-
-Edit `/streamlit_app.py` to customize this app to your heart's desire :heart:.
-If you have any questions, checkout our [documentation](https://docs.streamlit.io) and [community
-forums](https://discuss.streamlit.io).
-
-In the meantime, below is an example of what you can do with just a few lines of code:
+# Meu Coração para a Dona Pão!
 """
+# Função para desenhar um coração
+def plot_heart(ax, scale=1, color='red'):
+    t = np.linspace(0, 2 * np.pi, 1000)
+    x = 16 * np.sin(t)**3
+    y = 13 * np.cos(t) - 5 * np.cos(2 * t) - 2 * np.cos(3 * t) - np.cos(4 * t)
+    ax.plot(scale * x, scale * y, color=color)
+    ax.fill(scale * x, scale * y, color=color, alpha=0.3)
 
-num_points = st.slider("Number of points in spiral", 1, 10000, 1100)
-num_turns = st.slider("Number of turns in spiral", 1, 300, 31)
+# Título do aplicativo
+st.title(" ")
 
-indices = np.linspace(0, 1, num_points)
-theta = 2 * np.pi * num_turns * indices
-radius = indices
+# Texto romântico
+text_placeholder = st.empty()
 
-x = radius * np.cos(theta)
-y = radius * np.sin(theta)
+# Parâmetros variáveis
+# scale = st.slider("Tamanho do Coração", 0.5, 2.0, 1.0, 0.1)
+scale = 1
+# color = st.color_picker("Cor do Coração", "#FF0000")
+color = "#FF0000"
+# animate = st.checkbox("Animar Texto")
+animate = True
 
-df = pd.DataFrame({
-    "x": x,
-    "y": y,
-    "idx": indices,
-    "rand": np.random.randn(num_points),
-})
+# Desenho do coração
+fig, ax = plt.subplots(figsize=(5, 5))
+plot_heart(ax, scale=scale, color=color)
+ax.axis('equal')
+ax.axis('off')
+st.pyplot(fig)
 
-st.altair_chart(alt.Chart(df, height=700, width=700)
-    .mark_point(filled=True)
-    .encode(
-        x=alt.X("x", axis=None),
-        y=alt.Y("y", axis=None),
-        color=alt.Color("idx", legend=None, scale=alt.Scale()),
-        size=alt.Size("rand", legend=None, scale=alt.Scale(range=[1, 150])),
-    ))
+# Configura a animação do texto
+if animate:
+    messages = [" ", "", " ", " ", " ", " "
+                "Eu", "te", "amo", "muito", "meu", "Pãozinho"
+                , " ", "🍞❤️🥖", "🍞❤️🥖", "🍞❤️🥖", "🍞❤️🥖", "🍞❤️🥖"
+                , "🍞❤️🥖", "🍞❤️🥖", "🍞❤️🥖", "🍞❤️🥖", "🍞❤️🥖", "🍞❤️🥖"
+                , " ", "", " ", " ", " ", " "
+                
+                
+                ]
+    while True:
+        for message in messages:
+            text_placeholder.write(f"<h1 style='text-align: center; color: {color};'>{message}</h1>", unsafe_allow_html=True)
+            time.sleep(0.685)
+else:
+    text_placeholder.write("<h1 style='text-align: center;'>Este coração é para você, meu amor! ❤️</h1>", unsafe_allow_html=True)
